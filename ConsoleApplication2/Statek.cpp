@@ -19,10 +19,9 @@ Statek::Statek(int numer)
 #endif // DEBUG
 
 	
-	
+	liczba_pasazerow = 0;
 	pasazerowie = new Pasazer[100];
-	int numer_pasazera[100];
-	Pasazer::liczba_pasazerow -= 100;
+	
 	wypornosc = 45000;
 	numerStatku = numer;
 	silnik = new Silnik();
@@ -54,15 +53,15 @@ void Statek::dodajPasazerow(int ile)
 		cout << "Przekroczono limit pasazerow!" << endl;
 		return;
 	}
-	int poczatek = Pasazer::liczba_pasazerow;
+	int poczatek = liczba_pasazerow;
 	
 	for (int i=0; i < ile; i++)
 	{
-		pasazerowie[poczatek] = Pasazer("Kuba Brzozowski");
+		pasazerowie[poczatek] = Pasazer();
 		pasazerowie[poczatek].numerid =  poczatek + 12345;
 		this->numer_pasazera[poczatek] = pasazerowie[poczatek].numerid;
-		cout << "Dodano " << Pasazer::liczba_pasazerow + 1 << " pasazera." << endl;
-		Pasazer::liczba_pasazerow++;
+		cout << "Dodano " << liczba_pasazerow + 1 << " pasazera." << endl;
+		liczba_pasazerow++;
 		poczatek++;
 	
 	}
@@ -78,15 +77,15 @@ int Statek::operator[](int index)
 
 void Statek::usunPasazerow(int ile)
 {
-	if (ile > Pasazer::liczba_pasazerow)
+	if (ile > liczba_pasazerow)
 	{
-		ile = Pasazer::liczba_pasazerow;
+		ile = liczba_pasazerow;
 	}
 
 	for (int i = 0; i < ile; i++)
 	{
-		pasazerowie[Pasazer::liczba_pasazerow].~Pasazer();
-		cout << "Usunieto " << Pasazer::liczba_pasazerow + 1 << " pasazera." << endl;
+		pasazerowie[liczba_pasazerow].~Pasazer();
+		cout << "Usunieto " << liczba_pasazerow + 1 << " pasazera." << endl;
 		
 	}
 	
@@ -106,21 +105,118 @@ Statek & Statek::operator-(int right)
 	return *this;
 }
 
-Statek::Statek(const Statek & s)						//konstruktor kopiujacy klase Statek
+Statek & Statek::operator-(Pasazer & p)
 {
-
-	pasazerowie = new Pasazer[100];
-	int numer_pasazera[100];
-
-	for (int i = 0; i < 100; i++)
+	if (liczba_pasazerow - 1 < 0)
 	{
-		numer_pasazera[i] = s.numer_pasazera[i];
-		pasazerowie[i] = s.pasazerowie[i];
+		cout << "Nie mozna usunac pasazera" << endl;
 	}
 
-	Pasazer::liczba_pasazerow -= 100;
+	int i = 0;
+	for (i; i < liczba_pasazerow; i++)
+	{
+		if (pasazerowie[i].imie_pasazera == p.imie_pasazera)
+		{
+			break;
+		}
+		else continue;
+	}
+
+	int usun_to = i;
+	Pasazer *ptr = nullptr;
+	ptr = new Pasazer[liczba_pasazerow - 1];
+	
+	for (int j = 0; j < liczba_pasazerow - 1; j++)
+	{
+		if (j < usun_to)
+		{
+			ptr[j].imie_pasazera = pasazerowie[j].imie_pasazera;
+			ptr[j].numerid = pasazerowie[j].numerid;
+		}
+
+		else
+		{
+			ptr[j].imie_pasazera = pasazerowie[j + 1].imie_pasazera;
+			ptr[j].numerid = pasazerowie[j + 1].numerid;
+		}
+
+		
+	}
+
+	delete[] pasazerowie;
+	pasazerowie = ptr;
+	ptr = nullptr;
+	liczba_pasazerow--;
+	return *this;
+
+}
+
+Statek & Statek::operator+(Pasazer & p)
+{
+	if (liczba_pasazerow == 0)
+	{
+		Pasazer *ptr = nullptr;
+		ptr = new Pasazer[liczba_pasazerow + 1];
+		for (int i = 0; i < liczba_pasazerow; i++)
+		{
+			ptr[i].imie_pasazera = pasazerowie[i].imie_pasazera;
+			ptr[i].numerid = pasazerowie[i].numerid;
+
+		}
+
+		ptr[liczba_pasazerow].imie_pasazera = p.imie_pasazera;
+		ptr[liczba_pasazerow].numerid = p.numerid;
+
+		delete[] pasazerowie;
+		pasazerowie = ptr;
+		ptr = nullptr;
+		liczba_pasazerow++;
+
+	}
+
+	else if(liczba_pasazerow < 0)
+	{
+		cout << "Nieprawidlowa liczba pasazerow!" << endl;
+	}
+
+	else
+	{
+		Pasazer *ptr = nullptr;
+		ptr = new Pasazer[liczba_pasazerow + 1];
+		for (int i = 0; i < liczba_pasazerow; i++)
+		{
+			ptr[i].imie_pasazera = pasazerowie[i].imie_pasazera;
+			ptr[i].numerid = pasazerowie[i].numerid;
+
+		}
+
+		ptr[liczba_pasazerow].imie_pasazera = p.imie_pasazera;
+		ptr[liczba_pasazerow].numerid = p.numerid;
+
+		delete[] pasazerowie;
+		pasazerowie = ptr;
+		ptr = nullptr;
+		liczba_pasazerow++;
+	}
+	return *this;
+}
+
+
+
+Statek::Statek(const Statek & s)						//konstruktor kopiujacy klase Statek
+{
 	wypornosc = 45000;
 	numerStatku = s.numerStatku;
+	liczba_pasazerow = s.liczba_pasazerow;
+	pasazerowie = new Pasazer[liczba_pasazerow];
+	
+
+	for (int i = 0; i < liczba_pasazerow; i++)
+	{
+		pasazerowie[i].imie_pasazera = s.pasazerowie[i].imie_pasazera;
+		pasazerowie[i].numerid = s.pasazerowie[i].numerid;
+
+	}
 
 	silnik = new Silnik();
 	silnik->max_predkosc = s.silnik->max_predkosc;
@@ -141,7 +237,7 @@ Statek::Statek(const Statek & s)						//konstruktor kopiujacy klase Statek
 
 void Statek::ile_pasazerow()
 {
-	cout << "Liczba pasazerow:" << Pasazer::liczba_pasazerow << endl;
+	cout << "Liczba pasazerow:" << liczba_pasazerow << endl;
 }
 
 Statek::~Statek()

@@ -6,25 +6,17 @@
 
 using namespace std;
 
-Kapitan::Kapitan(int wiek)
-{
-#ifdef _DEBUG
-	cout << "Wywolano kostruktor Kapitan(wiek)." << endl;
-#endif // _DEBUG
 
-	this->wiek_kapitana = wiek;
-	Statek::liczba_obiektow++;
-}
-
-Kapitan::Kapitan(char *imie, char *nazwisko, int wiek)
+Kapitan::Kapitan(string imie, string nazwisko, int wiek)
 {
 #ifdef _DEBUG
 	cout << "Wywolano kostruktor Kapitan(imie,nazwisko,wiek)." << endl;
 #endif // _DEBUG
 
-	strcpy_s(this->imie_kapitana, imie);
-	strcpy_s(this->nazwisko_kapitana, nazwisko);
-	this->wiek_kapitana = wiek;
+	imie_kapitana = imie;
+	nazwisko_kapitana = nazwisko;
+	wiek_kapitana = wiek;
+
 	Statek::liczba_obiektow++;
 }
 

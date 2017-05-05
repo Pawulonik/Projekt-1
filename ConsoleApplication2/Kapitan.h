@@ -1,21 +1,24 @@
 #pragma once
 #include <string>
 #include "stdafx.h"
+
+using namespace std;
+
 class Kapitan
 {
 	friend class Statek;
 
 public:
 
-	Kapitan(int);
-	Kapitan(char* = "Brak", char* = "Brak", int = 0);
+
+	Kapitan(string = "Brak", string = "Brak", int = 0);
 	~Kapitan();
 
 private:
 
 	int wiek_kapitana;
-	char imie_kapitana[100];
-	char nazwisko_kapitana[100];
+	string imie_kapitana;
+	string nazwisko_kapitana;
 	
 	
 };

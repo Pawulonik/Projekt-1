@@ -8,34 +8,36 @@
 using namespace std;
 
 
-int Pasazer::liczba_pasazerow = 0;
 
 
-Pasazer::Pasazer(char* imie)
+
+Pasazer::Pasazer(string imie,int numer)
 {
 #ifdef _DEBUG
 	cout << "Uruchomiono konstruktor Pasazer." << endl;
 #endif // DEBUG
 
-	numerid = 0;
-	strcpy_s(this->imie_pasazera, imie);
-	liczba_pasazerow++;
+	numerid = numer;
+	imie_pasazera = imie;
 	Statek::liczba_obiektow++;
 }
 
 
 Pasazer& Pasazer::operator=(int numer)
 {
-	this->numerid = numer;
+	numerid = numer;
 	return *this;
 }
 
-Pasazer& Pasazer::operator=(char *tekst)
+Pasazer& Pasazer::operator=(string tekst)
 {
-	strcpy_s(this->imie_pasazera, tekst);
+	imie_pasazera = tekst;
 
 	return *this;
 }
+
+
+
 
 Pasazer::~Pasazer()
 {
@@ -45,7 +47,7 @@ Pasazer::~Pasazer()
 #endif // DEBUG
 
 	
-	liczba_pasazerow--;
+	
 	Statek::liczba_obiektow--;
 }
 

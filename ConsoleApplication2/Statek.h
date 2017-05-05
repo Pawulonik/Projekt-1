@@ -9,7 +9,7 @@ class Statek
 {
 public:
 
-
+	int liczba_pasazerow;
 	static int liczba_obiektow;
 	void ile_pasazerow();
 	static int ile_obiektow();		//statyczne pole obiektow
@@ -21,6 +21,8 @@ public:
 	Silnik *silnik;
 	Statek& operator+(int right);
 	Statek& operator-(int right);
+	Statek& operator-(Pasazer &p);
+	Statek& operator+(Pasazer &p);
 	Statek(const Statek &s);
 	operator int();
 	int operator[](int index);

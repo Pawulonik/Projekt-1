@@ -1,16 +1,19 @@
 #pragma once
 #include "stdafx.h"
 #include <string>
+#include <iostream>
+
+using namespace std;
 
 class Pasazer
 {
 public:
-	static int liczba_pasazerow;
+	
 	int numerid;
-	char imie_pasazera[100];
+	string imie_pasazera;
 	Pasazer& operator=(int numer);
-	Pasazer& operator=(char* tekst);
-	Pasazer(char* = "brak");
+	Pasazer& operator=(string);
+	Pasazer(string = "brak",int = 0);
 	~Pasazer();
 };
 

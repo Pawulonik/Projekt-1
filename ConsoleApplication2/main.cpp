@@ -9,44 +9,7 @@
 
 using namespace std;
 
-ostream& operator << (ostream &s, Silnik *silnik)				// Definicja cout << silnik (Wyswietla dane silnika)
-{
-	cout << "Status silnika:" << endl; 
-	cout << "V = " << silnik->predkosc << " kts" << endl;
-	cout << "Temp = " << silnik->temperatura << " C" << endl;
-	cout << "RPM = " << silnik->obroty << endl;
 
-	return s;
-}
-
-void operator+(Statek &left, Silnik &right)									//Dodawanie silnika do statku
-{
-	if (left.silnik->max_predkosc == 0 && left.silnik->min_predkosc == 0)
-	{
-		left.silnik->max_predkosc = 35;
-		left.silnik->min_predkosc = -10;
-	}
-	
-	left.silnik->max_predkosc += 10;
-	left.silnik->min_predkosc -= 5;
-
-	return;
-}
-
-void operator-(Statek &left, Silnik &right)									//Usuwanie silnika ze statku
-{
-	if (left.silnik->max_predkosc == 35 && left.silnik->min_predkosc == -10)
-	{
-		left.silnik->max_predkosc = 0;
-		left.silnik->min_predkosc = 0;
-	}
-
-	left.silnik->max_predkosc -= 10;
-	left.silnik->min_predkosc += 5;
-
-	return;
-	
-}
 
 int debug_OperatorTest()
 {	
@@ -146,10 +109,35 @@ int release_test()
 
 int main()										//main
 {
-	debug_OperatorTest();
+	//debug_OperatorTest();
 	//debug_test();								//Niepotrzebne odkomentowac
 	//release_test();
+	Statek statek;
+	Pasazer pasazer1("Jan Kowalski", 1);
+	Pasazer pasazer2("Jakub Brzozowski", 2);
+	Pasazer pasazer3("Ewa Nowak", 3);
+	Pasazer pasazer4("Kubus Puchatek", 4);
+	Pasazer pasazer5("Jacek Naruniec", 5);
+
+	statek = statek + pasazer1;
+	statek = statek + pasazer2;
+	statek = statek + pasazer3;
+	statek = statek + pasazer4;
+	statek = statek + pasazer5;
+
+	for (int i = 0; i < statek.liczba_pasazerow; i++)
+	{
+		cout << statek.pasazerowie[i] << statek.pasazerowie[i] << endl;
+	}
 	
+	
+	statek = statek - pasazer2;
+	statek = statek - pasazer3;
+
+	for (int i = 0; i < statek.liczba_pasazerow; i++)
+	{
+		cout << statek.pasazerowie[i] << statek.pasazerowie[i] << endl;
+	}
 
     return 0;
 }
